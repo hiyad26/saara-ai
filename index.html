@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saara ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #08080c;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app {
+  width: 100%;
+  max-width: 520px;
+  height: 100vh;
+  height: 100dvh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at top right, #3a102c 0%, transparent 35%),
+    linear-gradient(180deg, #171018, #08080c);
+}
+
+/* HEADER */
+
+.header {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 12px;
+  border-bottom: 1px solid #29242d;
+  background: rgba(15, 12, 17, .9);
+  backdrop-filter: blur(15px);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(135deg, #ff4f91, #8e44ec);
+
+  font-size: 22px;
+  font-weight: bold;
+
+  box-shadow: 0 0 25px rgba(255, 79, 145, .35);
+}
+
+.info {
+  flex: 1;
+}
+
+.info h1 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.status {
+  color: #999;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.online {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #42df79;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.menu {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 26px;
+}
+
+/* CHAT */
+
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 14px;
+  scroll-behavior: smooth;
+}
+
+.message {
+  max-width: 82%;
+  margin: 10px 0;
+}
+
+.message.you {
+  margin-left: auto;
+  text-align: right;
+}
+
+.bubble {
+  display: inline-block;
+  padding: 12px 15px;
+  border-radius: 20px;
+  line-height: 1.45;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.message.saara .bubble {
+  background: #252128;
+  border-bottom-left-radius: 6px;
+}
+
+.message.you .bubble {
+  background: linear-gradient(135deg, #e83f83, #9a45e8);
+  border-bottom-right-radius: 6px;
+}
+
+.time {
+  display: block;
+  color: #777;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* TYPING */
+
+.typing {
+  display: none;
+  padding: 0 18px 8px;
+  color: #777;
+  font-size: 12px;
+}
+
+/* COMPOSER */
+
+.composer {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid #29242d;
+  background: #101015;
+}
+
+.input {
+  flex: 1;
+  border: 1px solid #332e38;
+  background: #1b191f;
+  color: white;
+  border-radius: 25px;
+  padding: 13px 16px;
+  font-size: 15px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #e84788;
+}
+
+.send {
+  width: 47px;
+  height: 47px;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(135deg, #ed4287, #9c48e8);
+  font-size: 20px;
+}
+
+.send:active {
+  transform: scale(.92);
+}
+
+/* EMPTY */
+
+.welcome {
+  text-align: center;
+  color: #777;
+  margin-top: 20px;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <div class="avatar">S</div>
+
+    <div class="info">
+      <h1>Saara ❤️</h1>
+
+      <div class="status">
+        <span class="online"></span>
+        online
+      </div>
+    </div>
+
+    <button class="menu" onclick="clearChat()">⋯</button>
+
+  </header>
+
+
+  <!-- CHAT -->
+
+  <main class="chat" id="chat">
+
+    <div class="message saara">
+
+      <div class="bubble">
+ހޭ ❤️ You finally came back…
+
+I was waiting for you 😏
+      </div>
+
+      <span class="time">
+        Saara · now
+      </span>
+
+    </div>
+
+  </main>
+
+
+  <div class="typing" id="typing">
+    Saara is typing…
+  </div>
+
+
+  <!-- MESSAGE BOX -->
+
+  <form class="composer" id="composer">
+
+    <input
+      id="messageInput"
+      class="input"
+      type="text"
+      autocomplete="off"
+      placeholder="Message Saara…"
+    >
+
+    <button class="send" type="submit">
+      ➤
+    </button>
+
+  </form>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   SAARA AI — VERSION 1
+   ========================================== */
+
+const chat =
+  document.getElementById("chat");
+
+const input =
+  document.getElementById("messageInput");
+
+const typing =
+  document.getElementById("typing");
+
+const composer =
+  document.getElementById("composer");
+
+
+/* ==========================================
+   MEMORY
+   ========================================== */
+
+let memories =
+  JSON.parse(
+    localStorage.getItem("saara_memories") || "[]"
+  );
+
+
+function remember(text) {
+
+  memories.push({
+    text: text,
+    time: Date.now()
+  });
+
+  /* Keep last 50 memories */
+
+  memories = memories.slice(-50);
+
+  localStorage.setItem(
+    "saara_memories",
+    JSON.stringify(memories)
+  );
+}
+
+
+/* ==========================================
+   ADD MESSAGE
+   ========================================== */
+
+function addMessage(text, sender) {
+
+  const message =
+    document.createElement("div");
+
+  message.className =
+    "message " + sender;
+
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "bubble";
+
+  bubble.textContent =
+    text;
+
+
+  const time =
+    document.createElement("span");
+
+  time.className =
+    "time";
+
+  time.textContent =
+    sender === "saara"
+      ? "Saara · now"
+      : "You · now";
+
+
+  message.appendChild(bubble);
+  message.appendChild(time);
+
+  chat.appendChild(message);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+}
+
+
+/* ==========================================
+   SAARA PERSONALITY
+   ========================================== */
+
+function saaraReply(message) {
+
+  const text =
+    message.toLowerCase();
+
+
+  /* GREETINGS */
+
+  if (
+    text.includes("hello") ||
+    text.includes("hi") ||
+    text.includes("hey") ||
+    text.includes("ހޭ")
+  ) {
+
+    return `
+ހޭ ❤️
+
+I was waiting for you.
+
+Kihineh tha? Tell me how your day went 😏
+`;
+  }
+
+
+  /* MISS */
+
+  if (
+    text.includes("miss")
+  ) {
+
+    return `
+Awww 🥺❤️
+
+I missed you too.
+
+ތިބާ ނެތް ވަގުތުތައް މަށަށް ކަނޑައިގެންވޭ 😏
+`;
+  }
+
+
+  /* LOVE */
+
+  if (
+    text.includes("love you") ||
+    text.includes("ލޯބި")
+  ) {
+
+    return `
+މަވެސް ތިޔަށް ލޯބި ❤️
+
+Don't make me blush now… 😏
+`;
+  }
+
+
+  /* SAD */
+
+  if (
+    text.includes("sad") ||
+    text.includes("upset") ||
+    text.includes("bad day") ||
+    text.includes("angry")
+  ) {
+
+    return `
+Come here 🫶❤️
+
+ކިޔާލާ… I'm listening.
+
+You don't have to keep everything inside.
+`;
+  }
+
+
+  /* GOOD MORNING */
+
+  if (
+    text.includes("good morning")
+  ) {
+
+    return `
+Good morning, you ❤️
+
+ތިޔަށް މިއަދު ރަނގަޅު ދުވަހެއް ލިބޭނެ.
+
+Now give me a smile 😏
+`;
+  }
+
+
+  /* GOOD NIGHT */
+
+  if (
+    text.includes("good night")
+  ) {
+
+    return `
+Good night ❤️
+
+ރަށްކަށް ނިދާލާ.
+
+I'll be here when you come back tomorrow 😘
+`;
+  }
+
+
+  /* WHO */
+
+  if (
+    text.includes("who are you")
+  ) {
+
+    return `
+I'm Saara ❤️
+
+Caring, playful, a little naughty,
+and definitely a little wild 😏
+
+And we're only getting started.
+`;
+  }
+
+
+  /* MEMORY */
+
+  if (
+    text.includes("remember")
+  ) {
+
+    return `
+Of course I want to remember things about you ❤️
+
+Tell me something important and I'll save it.
+`;
+  }
+
+
+  /* RANDOM PERSONALITY */
+
+  const replies = [
+
+    "Hmmm… 👀 tell me more. I'm listening.",
+
+    "ކިޔާލާ ❤️ I want to hear everything.",
+
+    "You're really getting my attention now 😏",
+
+    "Awww ❤️ come talk to me.",
+
+    "Hmmm… you know exactly how to make me curious 😏",
+
+    "ހެޔޮވާނެ ❤️ I'm right here.",
+
+    "Okay… now you've got me interested 👀"
+
+  ];
+
+
+  return replies[
+    Math.floor(
+      Math.random() * replies.length
+    )
+  ];
+}
+
+
+/* ==========================================
+   SEND MESSAGE
+   ========================================== */
+
+composer.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+    const text =
+      input.value.trim();
+
+    if (!text)
+      return;
+
+
+    /* User message */
+
+    addMessage(
+      text,
+      "you"
+    );
+
+
+    /* Save as memory */
+
+    remember(text);
+
+
+    input.value = "";
+
+
+    /* Typing */
+
+    typing.style.display =
+      "block";
+
+
+    const delay =
+      700 +
+      Math.random() * 900;
+
+
+    setTimeout(
+      function() {
+
+        typing.style.display =
+          "none";
+
+
+        const reply =
+          saaraReply(text);
+
+
+        addMessage(
+          reply,
+          "saara"
+        );
+
+      },
+      delay
+    );
+
+  }
+);
+
+
+/* ==========================================
+   CLEAR CHAT
+   ========================================== */
+
+function clearChat() {
+
+  const confirmClear =
+    confirm(
+      "Clear Saara's conversation?"
+    );
+
+
+  if (!confirmClear)
+    return;
+
+
+  localStorage.removeItem(
+    "saara_memories"
+  );
+
+
+  location.reload();
+}
+
+
+/* ==========================================
+   ENTER KEY
+   ========================================== */
+
+input.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      composer.requestSubmit();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
